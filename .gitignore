@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+ENV/
+
+# Database
+*.sqlite3
+database/placement_portal.db
+
+# Environment / Secret
+.env
+
+# Project Artifacts (Excluded as per User Request)
+walkthrough.md
+task.md
+implementation_plan.md
+vercel_deployment.md
+git_commit_plan.md
+brain/
+tmp/
+.gemini/
+
+# Media
+static/img/reviews/media__*
