@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard – Student{% endblock %}
+{% block topbar_title %}Student Dashboard{% endblock %}
+
+{% block sidebar_nav %}
+<span class="nav-section-label">Navigation</span>
+<a href="{{ url_for('student.dashboard') }}" class="active"><span class="icon">🏠</span> Dashboard</a>
+<a href="{{ url_for('student.profile') }}"><span class="icon">👤</span> My Profile</a>
+<a href="{{ url_for('student.jobs') }}"><span class="icon">💼</span> Browse Jobs</a>
+<a href="{{ url_for('student.applications') }}"><span class="icon">📋</span> My Applications</a>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1>Welcome, {{ session.user_name }}! 👋</h1>
+    <p>Here's your placement overview</p>
+  </div>
+</div>
+
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-icon">💼</div>
+    <div class="stat-value">{{ total_jobs }}</div>
+    <div class="stat-label">Active Job Openings</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">📤</div>
+    <div class="stat-value">{{ my_applications }}</div>
+    <div class="stat-label">Applications Submitted</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">✅</div>
+    <div class="stat-value">{{ approved_count }}</div>
+    <div class="stat-label">Approved Applications</div>
+  </div>
+</div>
+
+{% if recent_jobs %}
+<div class="card">
+  <div class="card-title">🆕 Latest Job Openings</div>
+  <div class="jobs-grid">
+    {% for job in recent_jobs %}
+    <div class="job-card">
+      <div class="job-card-title">{{ job['title'] }}</div>
+      <div class="job-card-company">{{ job['company'] }}</div>
+      <div class="job-card-meta">
+        {% if job['location'] %}<span>📍 {{ job['location'] }}</span>{% endif %}
+        {% if job['salary'] %}<span>💰 {{ job['salary'] }}</span>{% endif %}
+        <span>📅 Deadline: {{ job['deadline'] }}</span>
+      </div>
+      <div class="job-card-footer">
+        <a href="{{ url_for('student.apply', job_id=job['id']) }}" class="btn btn-primary btn-sm">Apply Now</a>
+        <a href="{{ url_for('student.jobs') }}" class="btn btn-secondary btn-sm">View All</a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% else %}
+<div class="card">
+  <div class="empty-state">
+    <div class="empty-icon">💼</div>
+    <p>No job openings yet. Check back soon!</p>
+    <a href="{{ url_for('student.jobs') }}" class="btn btn-primary mt-16">Browse All Jobs</a>
+  </div>
+</div>
+{% endif %}
+{% endblock %}
