@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block title %}My Profile – Student{% endblock %}
+{% block topbar_title %}My Profile{% endblock %}
+
+{% block sidebar_nav %}
+<span class="nav-section-label">Navigation</span>
+<a href="{{ url_for('student.dashboard') }}"><span class="icon">🏠</span> Dashboard</a>
+<a href="{{ url_for('student.profile') }}" class="active"><span class="icon">👤</span> My Profile</a>
+<a href="{{ url_for('student.jobs') }}"><span class="icon">💼</span> Browse Jobs</a>
+<a href="{{ url_for('student.applications') }}"><span class="icon">📋</span> My Applications</a>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1>My Profile</h1>
+    <p>Keep your profile up-to-date for the best job matches</p>
+  </div>
+</div>
+
+<div class="card">
+  <form method="POST" enctype="multipart/form-data" id="profileForm">
+    <div class="form-group">
+      <label>Full Name</label>
+      <input type="text" class="form-control" value="{{ user['name'] }}" disabled>
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" class="form-control" value="{{ user['email'] }}" disabled>
+    </div>
+
+    <hr class="section-divider">
+    <div class="form-row">
+      <div class="form-group">
+        <label for="branch">Branch / Department</label>
+        <input type="text" id="branch" name="branch" class="form-control"
+               value="{{ profile['branch'] or '' }}" placeholder="e.g. Computer Science">
+      </div>
+      <div class="form-group">
+        <label for="year">Year of Study</label>
+        <select id="year" name="year" class="form-control">
+          {% for y in [1,2,3,4] %}
+          <option value="{{ y }}" {% if profile['year'] == y %}selected{% endif %}>Year {{ y }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="cgpa">CGPA</label>
+        <input type="number" id="cgpa" name="cgpa" class="form-control" step="0.01"
+               min="0" max="10" value="{{ profile['cgpa'] or '' }}" placeholder="e.g. 8.5">
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="text" id="phone" name="phone" class="form-control"
+               value="{{ profile['phone'] or '' }}" placeholder="e.g. 9876543210">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="skills">Skills (comma-separated)</label>
+      <input type="text" id="skills" name="skills" class="form-control"
+             value="{{ profile['skills'] or '' }}" placeholder="e.g. Python, Flask, SQL, JavaScript">
+    </div>
+
+    <div class="form-group">
+      <label for="resume">Upload Resume (PDF/DOC, max 5MB)</label>
+      <input type="file" id="resume" name="resume" class="form-control" accept=".pdf,.doc,.docx">
+      {% if profile['resume_filename'] %}
+        <div class="form-hint">✅ Current resume: {{ profile['resume_filename'] }}</div>
+      {% endif %}
+    </div>
+
+    <button type="submit" class="btn btn-primary">💾 Save Profile</button>
+  </form>
+</div>
+{% endblock %}
