@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}Browse Jobs – Student{% endblock %}
+{% block topbar_title %}Browse Jobs{% endblock %}
+
+{% block sidebar_nav %}
+<span class="nav-section-label">Navigation</span>
+<a href="{{ url_for('student.dashboard') }}"><span class="icon">🏠</span> Dashboard</a>
+<a href="{{ url_for('student.profile') }}"><span class="icon">👤</span> My Profile</a>
+<a href="{{ url_for('student.jobs') }}" class="active"><span class="icon">💼</span> Browse Jobs</a>
+<a href="{{ url_for('student.applications') }}"><span class="icon">📋</span> My Applications</a>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1>Browse Jobs</h1>
+    <p>{{ jobs|length }} active opening{{ 's' if jobs|length != 1 else '' }} available</p>
+  </div>
+</div>
+
+{% if jobs %}
+<div class="jobs-grid">
+  {% for job in jobs %}
+  <div class="job-card">
+    <div class="job-card-title">{{ job['title'] }}</div>
+    <div class="job-card-company">🏢 {{ job['company'] }}</div>
+    <div class="job-card-meta">
+      {% if job['location'] %}<span>📍 {{ job['location'] }}</span>{% endif %}
+      {% if job['salary'] %}<span>💰 {{ job['salary'] }}</span>{% endif %}
+      <span>📅 Deadline: {{ job['deadline'] }}</span>
+    </div>
+    <p style="font-size:0.85rem;color:var(--text-secondary);margin-top:4px;">
+      {{ job['description'][:120] }}{% if job['description']|length > 120 %}…{% endif %}
+    </p>
+    <div class="job-card-footer">
+      {% if job['id'] in applied_ids %}
+        <span class="badge badge-approved">✓ Applied</span>
+      {% else %}
+        <a href="{{ url_for('student.apply', job_id=job['id']) }}" class="btn btn-primary btn-sm">Apply Now</a>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="card">
+  <div class="empty-state">
+    <div class="empty-icon">💼</div>
+    <p>No active job openings at the moment.</p>
+    <p>Check back later — new postings are added regularly!</p>
+  </div>
+</div>
+{% endif %}
+{% endblock %}
