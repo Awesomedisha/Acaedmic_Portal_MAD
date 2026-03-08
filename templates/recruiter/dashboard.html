@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}Recruiter Dashboard{% endblock %}
+{% block topbar_title %}Recruiter Dashboard{% endblock %}
+
+{% block sidebar_nav %}
+<span class="nav-section-label">Recruiter</span>
+<a href="{{ url_for('recruiter.dashboard') }}" class="active"><span class="icon">🏠</span> Dashboard</a>
+<a href="{{ url_for('recruiter.post_job') }}"><span class="icon">📢</span> Post a Job</a>
+<a href="{{ url_for('recruiter.my_jobs') }}"><span class="icon">💼</span> My Jobs</a>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1>Welcome, {{ session.user_name }}! 👋</h1>
+    <p>Recruiter overview</p>
+  </div>
+  <a href="{{ url_for('recruiter.post_job') }}" class="btn btn-primary">+ Post New Job</a>
+</div>
+
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-icon">💼</div>
+    <div class="stat-value">{{ my_jobs }}</div>
+    <div class="stat-label">Jobs Posted</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">👥</div>
+    <div class="stat-value">{{ total_applicants }}</div>
+    <div class="stat-label">Total Applicants</div>
+  </div>
+</div>
+
+{% if recent_jobs %}
+<div class="card">
+  <div class="card-title">📋 Your Recent Postings</div>
+  <div class="table-wrapper">
+    <table>
+      <thead><tr><th>Title</th><th>Company</th><th>Deadline</th><th>Status</th><th>Applicants</th></tr></thead>
+      <tbody>
+        {% for job in recent_jobs %}
+        <tr>
+          <td class="fw-600">{{ job['title'] }}</td>
+          <td>{{ job['company'] }}</td>
+          <td style="font-size:0.82rem;">{{ job['deadline'] }}</td>
+          <td><span class="badge {{ 'badge-active' if job['is_active'] else 'badge-inactive' }}">{{ 'Active' if job['is_active'] else 'Inactive' }}</span></td>
+          <td><a href="{{ url_for('recruiter.applicants', job_id=job['id']) }}" class="btn btn-outline btn-sm">View</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endif %}
+{% endblock %}
