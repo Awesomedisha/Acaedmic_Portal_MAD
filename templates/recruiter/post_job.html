@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Post a Job – Recruiter{% endblock %}
+{% block topbar_title %}Post New Job{% endblock %}
+
+{% block sidebar_nav %}
+<span class="nav-section-label">Recruiter</span>
+<a href="{{ url_for('recruiter.dashboard') }}"><span class="icon">🏠</span> Dashboard</a>
+<a href="{{ url_for('recruiter.post_job') }}" class="active"><span class="icon">📢</span> Post a Job</a>
+<a href="{{ url_for('recruiter.my_jobs') }}"><span class="icon">💼</span> My Jobs</a>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1>Post New Job</h1>
+    <p>Fill in the details to create a new listing</p>
+  </div>
+</div>
+
+<div class="card">
+  <form method="POST" action="{{ url_for('recruiter.post_job') }}" id="postJobForm">
+    <div class="form-row">
+      <div class="form-group">
+        <label for="title">Job Title *</label>
+        <input type="text" id="title" name="title" class="form-control" required placeholder="e.g. Backend Developer">
+      </div>
+      <div class="form-group">
+        <label for="company">Company Name *</label>
+        <input type="text" id="company" name="company" class="form-control" required placeholder="e.g. InnovateCo">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="location">Location</label>
+        <input type="text" id="location" name="location" class="form-control" placeholder="e.g. Hyderabad">
+      </div>
+      <div class="form-group">
+        <label for="salary">Package / Salary</label>
+        <input type="text" id="salary" name="salary" class="form-control" placeholder="e.g. 6–10 LPA">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="description">Job Description *</label>
+      <textarea id="description" name="description" class="form-control" required style="min-height:120px;"
+                placeholder="Describe the role and responsibilities..."></textarea>
+    </div>
+    <div class="form-group">
+      <label for="requirements">Requirements</label>
+      <textarea id="requirements" name="requirements" class="form-control" style="min-height:80px;"
+                placeholder="Skills, qualifications..."></textarea>
+    </div>
+    <div class="form-group">
+      <label for="deadline">Application Deadline *</label>
+      <input type="date" id="deadline" name="deadline" class="form-control" required>
+    </div>
+    <div style="display:flex;gap:12px;">
+      <button type="submit" class="btn btn-primary">📢 Post Job</button>
+      <a href="{{ url_for('recruiter.my_jobs') }}" class="btn btn-secondary">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}
