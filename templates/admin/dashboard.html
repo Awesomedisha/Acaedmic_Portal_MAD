@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Dashboard{% endblock %}
+{% block topbar_title %}Admin Dashboard{% endblock %}
+
+{% block sidebar_nav %}
+<span class="nav-section-label">Management</span>
+<a href="{{ url_for('admin.dashboard') }}" class="active"><span class="icon">🏠</span> Dashboard</a>
+<a href="{{ url_for('admin.students') }}"><span class="icon">🎒</span> Students</a>
+<a href="{{ url_for('admin.jobs') }}"><span class="icon">💼</span> Job Postings</a>
+<a href="{{ url_for('admin.applications') }}"><span class="icon">📋</span> Applications</a>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1>Admin Dashboard</h1>
+    <p>Full overview of the placement portal</p>
+  </div>
+  <a href="{{ url_for('admin.create_job') }}" class="btn btn-primary">+ Post New Job</a>
+</div>
+
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-icon">🎒</div>
+    <div class="stat-value">{{ stats.total_students }}</div>
+    <div class="stat-label">Total Students</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">🏢</div>
+    <div class="stat-value">{{ stats.total_recruiters }}</div>
+    <div class="stat-label">Recruiters</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">💼</div>
+    <div class="stat-value">{{ stats.active_jobs }}</div>
+    <div class="stat-label">Active Jobs</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">📋</div>
+    <div class="stat-value">{{ stats.total_applications }}</div>
+    <div class="stat-label">Total Applications</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">⏳</div>
+    <div class="stat-value">{{ stats.pending_applications }}</div>
+    <div class="stat-label">Pending Review</div>
+  </div>
+</div>
+
+{% if recent_apps %}
+<div class="card">
+  <div class="card-title">🔔 Recent Applications</div>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr><th>Student</th><th>Position</th><th>Company</th><th>Applied</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        {% for app in recent_apps %}
+        <tr>
+          <td class="fw-600">{{ app['student_name'] }}</td>
+          <td>{{ app['title'] }}</td>
+          <td>{{ app['company'] }}</td>
+          <td style="font-size:0.82rem;color:var(--text-secondary);">{{ app['applied_at'][:10] }}</td>
+          <td><span class="badge badge-{{ app['status'] }}">{{ app['status'] }}</span></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div style="margin-top:12px;">
+    <a href="{{ url_for('admin.applications') }}" class="btn btn-secondary btn-sm">View All Applications</a>
+  </div>
+</div>
+{% endif %}
+{% endblock %}
