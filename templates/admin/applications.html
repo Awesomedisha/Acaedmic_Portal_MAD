@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %}Applications – Admin{% endblock %}
+{% block topbar_title %}Manage Applications{% endblock %}
+
+{% block sidebar_nav %}
+<span class="nav-section-label">Management</span>
+<a href="{{ url_for('admin.dashboard') }}"><span class="icon">🏠</span> Dashboard</a>
+<a href="{{ url_for('admin.students') }}"><span class="icon">🎒</span> Students</a>
+<a href="{{ url_for('admin.jobs') }}"><span class="icon">💼</span> Job Postings</a>
+<a href="{{ url_for('admin.applications') }}" class="active"><span class="icon">📋</span> Applications</a>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1>Applications ({{ applications|length }})</h1>
+    <p>Review and approve or reject student applications</p>
+  </div>
+</div>
+
+<div class="filter-bar">
+  <a href="{{ url_for('admin.applications') }}" class="filter-btn {{ 'active' if status_filter=='all' }}">All</a>
+  <a href="{{ url_for('admin.applications', status='pending') }}" class="filter-btn {{ 'active' if status_filter=='pending' }}">⏳ Pending</a>
+  <a href="{{ url_for('admin.applications', status='approved') }}" class="filter-btn {{ 'active' if status_filter=='approved' }}">✅ Approved</a>
+  <a href="{{ url_for('admin.applications', status='rejected') }}" class="filter-btn {{ 'active' if status_filter=='rejected' }}">❌ Rejected</a>
+</div>
+
+{% if applications %}
+<div class="card">
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr><th>#</th><th>Student</th><th>Position</th><th>Company</th><th>CGPA</th><th>Applied</th><th>Status</th><th>Actions</th></tr>
+      </thead>
+      <tbody>
+        {% for app in applications %}
+        <tr>
+          <td>{{ loop.index }}</td>
+          <td>
+            <strong>{{ app['student_name'] }}</strong><br>
+            <span style="font-size:0.78rem;color:var(--text-secondary);">{{ app['student_email'] }}</span>
+          </td>
+          <td class="fw-600">{{ app['title'] }}</td>
+          <td>{{ app['company'] }}</td>
+          <td>{{ app['cgpa'] or '—' }}</td>
+          <td style="font-size:0.82rem;color:var(--text-secondary);">{{ app['applied_at'][:10] }}</td>
+          <td><span class="badge badge-{{ app['status'] }}">{{ app['status'] }}</span></td>
+          <td>
+            <div style="display:flex;gap:5px;flex-wrap:wrap;">
+              {% if app['status'] != 'approved' %}
+              <form method="POST" action="{{ url_for('admin.update_application', app_id=app['id'], new_status='approved') }}">
+                <button type="submit" class="btn btn-success btn-sm">Approve</button>
+              </form>
+              {% endif %}
+              {% if app['status'] != 'rejected' %}
+              <form method="POST" action="{{ url_for('admin.update_application', app_id=app['id'], new_status='rejected') }}">
+                <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+              </form>
+              {% endif %}
+              {% if app['status'] != 'pending' %}
+              <form method="POST" action="{{ url_for('admin.update_application', app_id=app['id'], new_status='pending') }}">
+                <button type="submit" class="btn btn-secondary btn-sm">Reset</button>
+              </form>
+              {% endif %}
+              {% if app['resume_filename'] %}
+              <a href="{{ url_for('static', filename='uploads/' + app['resume_filename']) }}"
+                 target="_blank" class="btn btn-outline btn-sm">Resume</a>
+              {% endif %}
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% else %}
+<div class="card">
+  <div class="empty-state">
+    <div class="empty-icon">📋</div>
+    <p>No applications found for this filter.</p>
+  </div>
+</div>
+{% endif %}
+{% endblock %}
