@@ -7,8 +7,13 @@ import sqlite3
 import os
 from werkzeug.security import generate_password_hash
 
-DB_PATH = os.path.join(os.path.dirname(__file__), 'portal.db')
-SCHEMA_PATH = os.path.join(os.path.dirname(__file__), 'schema.sql')
+def get_db_path():
+    if os.environ.get('VERCEL'):
+        return '/tmp/portal.db'
+    return os.path.join(os.path.dirname(__file__), 'portal.db')
+
+DB_PATH = get_db_path()
+SCHEMA_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), 'schema.sql'))
 
 
 def init_database():

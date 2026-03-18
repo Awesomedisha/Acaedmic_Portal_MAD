@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Placement Portal – Launch Your Career</title>
+  <meta name="description" content="A modern placement portal connecting students with top recruiters.">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<div class="landing-page">
+  <!-- Sticky Navigation -->
+  <nav class="landing-nav">
+    <a href="#" class="nav-brand">
+      <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo" style="width: 32px; height: 32px; border-radius: 50%;">
+      <span>PlacementHub</span>
+    </a>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#about">About</a>
+      <a href="#stats">Success</a>
+      <a href="{{ url_for('auth.login') }}" class="btn btn-primary btn-sm">Portal Login</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="landing-hero">
+    <div class="hero-content">
+      <img src="{{ url_for('static', filename='img/logo.png') }}" alt="PlacementHub Logo" class="hero-logo">
+      <h1 class="text-gradient">Elevating Careers,<br>Connecting Futures.</h1>
+      <p>The next-generation placement ecosystem designed to bridge the gap between academic brilliance and industry leadership.</p>
+      
+      <div class="landing-links">
+        <a href="{{ url_for('auth.register') }}" class="btn btn-primary" style="padding: 14px 32px; border-radius: 100px; font-size: 1rem;">Get Started Now →</a>
+        <a href="#about" class="btn btn-outline" style="padding: 14px 32px; border-radius: 100px; color: white; border-color: rgba(255,255,255,0.3);">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Banner -->
+  <section id="stats" class="stats-section">
+    <div class="stats-container glass">
+      <div class="stat-item">
+        <span class="stat-num text-gradient">500+</span>
+        <span class="stat-desc">PLACEMENTS MADE</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num text-gradient">120+</span>
+        <span class="stat-desc">PARTNER COMPANIES</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num text-gradient">98%</span>
+        <span class="stat-desc">SUCCESS RATE</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="landing-section">
+    <h2 class="section-title">Technological Edge</h2>
+    <div class="features-grid">
+      <div class="f-card glass">
+        <div class="f-icon-box">⚡</div>
+        <h4>Instant Sync Engine</h4>
+        <p>Our proprietary real-time engine ensures that every job posting reaches students the millisecond it's live.</p>
+      </div>
+      <div class="f-card glass">
+        <div class="f-icon-box">🛡️</div>
+        <h4>Secure Profile Vault</h4>
+        <p>Advanced security architecture for student data, hosting resumes and profiles with enterprise-grade protection.</p>
+      </div>
+      <div class="f-card glass">
+        <div class="f-icon-box">🎯</div>
+        <h4>Precision Tracking</h4>
+        <p>A transparent application lifecycle that keeps students informed at every milestone—from submission to offer.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Voices of Success (Replaces Bespoke Experiences) -->
+  <section class="landing-section" style="background: rgba(255,255,255,0.01);">
+    <h2 class="section-title">Voices of Success</h2>
+    <div class="reviews-grid">
+      <!-- Review 1: Student -->
+      <div class="review-card glass">
+        <div class="review-content">
+          "PlacementHub's real-time sync was a total game-changer. I applied for 5 elite roles and landed my dream offer within 48 hours!"
+        </div>
+        <div class="reviewer-meta">
+          <img src="{{ url_for('static', filename='img/reviews/student1.png') }}" alt="Arjun" class="reviewer-avatar">
+          <div class="reviewer-info">
+            <h5>Arjun Mehta</h5>
+            <span>Student &middot; Computer Science</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Review 2: Recruiter -->
+      <div class="review-card glass">
+        <div class="review-content">
+          "The data-driven filtering and precision tracking save our firm hundreds of hours. We found our top 10 hires in record time."
+        </div>
+        <div class="reviewer-meta">
+          <img src="{{ url_for('static', filename='img/reviews/recruiter1.png') }}" alt="Rajesh" class="reviewer-avatar">
+          <div class="reviewer-info">
+            <h5>Rajesh Iyer</h5>
+            <span>Sr. HR &middot; GlobalTech Solutions</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Review 3: Admin/Faculty -->
+      <div class="review-card glass">
+        <div class="review-content">
+          "Managing placement cycles across 500+ students used to be chaos. Now, it's a seamless, transparent experience for everyone."
+        </div>
+        <div class="reviewer-meta">
+          <img src="{{ url_for('static', filename='img/reviews/faculty1.png') }}" alt="Sunita" class="reviewer-avatar">
+          <div class="reviewer-info">
+            <h5>Dr. Sunita Rao</h5>
+            <span>Dean &middot; Corporate Relations</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Narrative Section -->
+  <section id="about" class="landing-section bio-section">
+    <div class="about-grid">
+      <div class="about-text">
+        <h6 style="color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px;">Our Ethos</h6>
+        <h2 style="font-size: 2.5rem; line-height: 1.2;">Innovation in Academic Recruitment.</h2>
+        <p>PlacementHub was engineered to solve the fragmented nature of university hiring. By centralizing the communication between institutions and the corporate world, we have created a frictionless environment where talent meets its destiny.</p>
+        <div class="vm-cards">
+          <div class="vm-card glass">
+            <h5>Our Vision</h5>
+            <p style="font-size: 0.9rem;">To become the universal standard for academic-to-industry bridges worldwide.</p>
+          </div>
+          <div class="vm-card glass">
+            <h5>Our Mission</h5>
+            <p style="font-size: 0.9rem;">To empower every student with the tools they need to launch their professional legacy.</p>
+          </div>
+        </div>
+      </div>
+      <div class="about-image-container">
+        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80" alt="Professional Workspace" class="about-image glass">
+      </div>
+    </div>
+  </section>
+
+  <footer class="landing-footer">
+    <div class="footer-content">
+      <div class="footer-info">
+        <h4 style="margin-bottom: 20px;">PlacementHub</h4>
+        <p style="color: #64748b; font-size: 0.9rem; max-width: 300px;">The definitive platform for academic placement management. Built for excellence.</p>
+      </div>
+      <div class="footer-links">
+        <h5>Platform</h5>
+        <ul>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#stats">Success Stories</a></li>
+          <li><a href="{{ url_for('auth.register') }}">Registration</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h5>Resources</h5>
+        <ul>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Technical Support</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 PlacementHub Application – V1. Engineered by Advanced Dev Team.</p>
+      <p>Secure Academic Portal</p>
+    </div>
+  </footer>
+</div>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
