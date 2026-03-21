@@ -3,7 +3,7 @@
   publish = "public"
 
 [functions]
-  directory = "netlify/functions"
+  directory = "functions"
   included_files = ["templates/**", "static/**", "database/**", "modules/**", "app.py"]
 
 [[redirects]]
